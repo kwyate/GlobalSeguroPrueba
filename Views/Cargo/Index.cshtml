@@ -1,0 +1,50 @@
+﻿@model IEnumerable<GlobalSegurosPrueba.Models.Cargo>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Cargo</h2>
+
+<p>
+    
+</p>
+<div class="container-fluid mb-2">
+    <div class="row">
+        <div class="col-md-3 d-flex justify-content-around">
+            @Html.ActionLink("Create Cargo", "Create", null, new { @class = "btn btn-dark" })
+            @Html.ActionLink("Empleados", "Index", "Empleado", null, new { @class = "btn btn-dark" })
+
+        </div>
+
+    </div>
+</div>
+<table class="table table-striped">
+    <tr>
+        <th>
+            Descripción
+        </th>
+        <th>
+            Salario
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.descripcion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.salario)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>

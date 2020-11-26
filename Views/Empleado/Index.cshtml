@@ -1,0 +1,84 @@
+﻿@model IEnumerable<GlobalSegurosPrueba.Models.Empleado>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Empleados</h2>
+@using (Ajax.BeginForm("filtrarCargo", "Empleado", new AjaxOptions { HttpMethod = "POST",  }))
+{
+<div class="form-group">
+    <label class="control-label col-md-2">Cargo</label>
+    <div class="col-md-10">
+        @Html.DropDownList("cargo", null, htmlAttributes: new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Buscar" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+
+}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-6 d-flex justify-content-around">
+            @Html.ActionLink("Create", "Create", null, new { @class = "btn btn-dark" })
+            @Html.ActionLink("Cargos", "Index", "Cargo", null, new { @class = "btn btn-dark" })
+            @Html.ActionLink("Tiendas", "Index", "Tienda", null, new { @class = "btn btn-dark" })
+            @Html.ActionLink("Programar Empleado", "Index", "EmpleadoTienda", null, new { @class = "btn btn-success" })
+
+        </div>
+
+    </div>
+</div>
+<p>
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Nombre
+        </th>
+        <th>
+            Documento
+        </th>
+        <th>
+            Fecha Nacimiento
+        </th>
+        <th>
+            Genero
+        </th>
+        <th>
+            Cargo
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Documento)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.fechaNacimiento)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.genero)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cargo1.descripcion)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            </td>
+        </tr>
+    }
+
+</table>

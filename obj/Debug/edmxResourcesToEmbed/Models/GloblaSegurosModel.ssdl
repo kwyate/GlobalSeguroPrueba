@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="pruebaGloblaSegurosModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Cargos">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="descripcion" Type="varchar" MaxLength="100" />
+    <Property Name="salario" Type="decimal" Precision="18" Scale="0" />
+  </EntityType>
+  <EntityType Name="Empleado_Tienda">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="tienda" Type="int" />
+    <Property Name="empleado" Type="int" />
+    <Property Name="fecha" Type="datetime" />
+  </EntityType>
+  <EntityType Name="Empleados">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nombre" Type="varchar" MaxLength="50" />
+    <Property Name="Documento" Type="varchar" MaxLength="50" />
+    <Property Name="fechaNacimiento" Type="datetime" />
+    <Property Name="genero" Type="varchar" MaxLength="1" />
+    <Property Name="cargo" Type="int" />
+  </EntityType>
+  <EntityType Name="Tiendas">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nombreTienda" Type="varchar" MaxLength="50" />
+    <Property Name="direccion" Type="varchar" MaxLength="50" />
+    <Property Name="telefono" Type="varchar" MaxLength="11" />
+  </EntityType>
+  <Association Name="FK_EMPLEADO_CARGO">
+    <End Role="Cargos" Type="Self.Cargos" Multiplicity="0..1" />
+    <End Role="Empleados" Type="Self.Empleados" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cargos">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Empleados">
+        <PropertyRef Name="cargo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EMPLEADO_TIENDA">
+    <End Role="Empleados" Type="Self.Empleados" Multiplicity="0..1" />
+    <End Role="Empleado_Tienda" Type="Self.Empleado_Tienda" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Empleados">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Empleado_Tienda">
+        <PropertyRef Name="empleado" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TIENDA_EMPLEADO">
+    <End Role="Tiendas" Type="Self.Tiendas" Multiplicity="0..1" />
+    <End Role="Empleado_Tienda" Type="Self.Empleado_Tienda" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tiendas">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Empleado_Tienda">
+        <PropertyRef Name="tienda" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="pruebaGloblaSegurosModelStoreContainer">
+    <EntitySet Name="Cargos" EntityType="Self.Cargos" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Empleado_Tienda" EntityType="Self.Empleado_Tienda" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Empleados" EntityType="Self.Empleados" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Tiendas" EntityType="Self.Tiendas" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_EMPLEADO_CARGO" Association="Self.FK_EMPLEADO_CARGO">
+      <End Role="Cargos" EntitySet="Cargos" />
+      <End Role="Empleados" EntitySet="Empleados" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EMPLEADO_TIENDA" Association="Self.FK_EMPLEADO_TIENDA">
+      <End Role="Empleados" EntitySet="Empleados" />
+      <End Role="Empleado_Tienda" EntitySet="Empleado_Tienda" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TIENDA_EMPLEADO" Association="Self.FK_TIENDA_EMPLEADO">
+      <End Role="Tiendas" EntitySet="Tiendas" />
+      <End Role="Empleado_Tienda" EntitySet="Empleado_Tienda" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

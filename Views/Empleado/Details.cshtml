@@ -1,0 +1,43 @@
+﻿@*@model GlobalSegurosPrueba.Models.Empleado*@
+@model IEnumerable<GlobalSegurosPrueba.Models.Empleado_Tienda>
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            Fecha
+        </th>
+        <th>
+            Empleado
+        </th>
+        <th>
+            Tienda
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.fecha)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Empleado1.nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tienda1.nombreTienda)
+            </td>
+           
+        </tr>
+    }
+
+</table>
+<div>
+    @Html.ActionLink("Empleados", "Index")
+</div>

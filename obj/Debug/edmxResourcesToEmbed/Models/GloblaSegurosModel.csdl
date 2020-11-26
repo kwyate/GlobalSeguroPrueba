@@ -1,0 +1,100 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="pruebaGloblaSegurosModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Cargo">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="salario" Type="Decimal" Precision="18" Scale="0" />
+    <NavigationProperty Name="Empleados" Relationship="Self.FK_EMPLEADO_CARGO" FromRole="Cargos" ToRole="Empleados" />
+  </EntityType>
+  <EntityType Name="Empleado_Tienda">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="tienda" Type="Int32" />
+    <Property Name="empleado" Type="Int32" />
+    <Property Name="fecha" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Empleado1" Relationship="Self.FK_EMPLEADO_TIENDA" FromRole="Empleado_Tienda" ToRole="Empleados" />
+    <NavigationProperty Name="Tienda1" Relationship="Self.FK_TIENDA_EMPLEADO" FromRole="Empleado_Tienda" ToRole="Tiendas" />
+  </EntityType>
+  <EntityType Name="Empleado">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Documento" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="fechaNacimiento" Type="DateTime" Precision="3" />
+    <Property Name="genero" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="cargo" Type="Int32" />
+    <NavigationProperty Name="Cargo1" Relationship="Self.FK_EMPLEADO_CARGO" FromRole="Empleados" ToRole="Cargos" />
+    <NavigationProperty Name="Empleado_Tienda" Relationship="Self.FK_EMPLEADO_TIENDA" FromRole="Empleados" ToRole="Empleado_Tienda" />
+  </EntityType>
+  <EntityType Name="Tienda">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nombreTienda" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="direccion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="telefono" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Empleado_Tienda" Relationship="Self.FK_TIENDA_EMPLEADO" FromRole="Tiendas" ToRole="Empleado_Tienda" />
+  </EntityType>
+  <Association Name="FK_EMPLEADO_CARGO">
+    <End Role="Cargos" Type="Self.Cargo" Multiplicity="0..1" />
+    <End Role="Empleados" Type="Self.Empleado" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cargos">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Empleados">
+        <PropertyRef Name="cargo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EMPLEADO_TIENDA">
+    <End Role="Empleados" Type="Self.Empleado" Multiplicity="0..1" />
+    <End Role="Empleado_Tienda" Type="Self.Empleado_Tienda" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Empleados">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Empleado_Tienda">
+        <PropertyRef Name="empleado" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TIENDA_EMPLEADO">
+    <End Role="Tiendas" Type="Self.Tienda" Multiplicity="0..1" />
+    <End Role="Empleado_Tienda" Type="Self.Empleado_Tienda" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tiendas">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Empleado_Tienda">
+        <PropertyRef Name="tienda" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="pruebaGloblaSegurosEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Cargos" EntityType="Self.Cargo" />
+    <EntitySet Name="Empleado_Tienda" EntityType="Self.Empleado_Tienda" />
+    <EntitySet Name="Empleados" EntityType="Self.Empleado" />
+    <EntitySet Name="Tiendas" EntityType="Self.Tienda" />
+    <AssociationSet Name="FK_EMPLEADO_CARGO" Association="Self.FK_EMPLEADO_CARGO">
+      <End Role="Cargos" EntitySet="Cargos" />
+      <End Role="Empleados" EntitySet="Empleados" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EMPLEADO_TIENDA" Association="Self.FK_EMPLEADO_TIENDA">
+      <End Role="Empleados" EntitySet="Empleados" />
+      <End Role="Empleado_Tienda" EntitySet="Empleado_Tienda" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TIENDA_EMPLEADO" Association="Self.FK_TIENDA_EMPLEADO">
+      <End Role="Tiendas" EntitySet="Tiendas" />
+      <End Role="Empleado_Tienda" EntitySet="Empleado_Tienda" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
